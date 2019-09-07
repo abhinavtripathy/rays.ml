@@ -7,3 +7,5 @@ public/node_tmp/
 public/node/
 public/npm.tar.gz
 
+#Keys
+public/key.js
