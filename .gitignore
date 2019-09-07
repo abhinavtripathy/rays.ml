@@ -1,1 +1,9 @@
 nlp-parser/node_modules
+
+# nodejs
+public/bower_components/
+public/node_modules/
+public/node_tmp/
+public/node/
+public/npm.tar.gz
+
