@@ -9,3 +9,6 @@ public/npm.tar.gz
 
 #Keys
 public/key.js
+
+#Cloud Functions 
+functions/node_modules
