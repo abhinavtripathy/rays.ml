@@ -6,6 +6,8 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.dropotron.min.js"></script>
@@ -16,6 +18,19 @@
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="js/dropzone.js"></script>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/d3/d3.min.js"></script>
+		<script src="bower_components/d3-transform/src/d3-transform.js"></script>
+		<script src="bower_components/cafej/src/ext-array.js"></script>
+		<script src="bower_components/cafej/src/misc.js"></script>
+		<script src="bower_components/cafej/src/micro-observer.js"></script>
+		<script src="bower_components/microplugin/src/microplugin.js"></script>
+		<script src="src/bubble-chart.js"></script>
+		<script src="src/plugins/central-click/central-click.js"></script>
+		<script src="src/plugins/lines/lines.js"></script>
+		<script src="bubble-chart.js"></script>
+
 		<noscript>
 			<link rel="stylesheet" href="css/dropzone.css" />
 			<link rel="stylesheet" href="css/skel.css" />
@@ -25,6 +40,14 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<style>
+		.bubbleChart {
+	      width: 80%;
+	      margin: 0 0 0 0;
+		}
+		.bubbleChart svg{
+		    background: rgb(242,242,242);
+		}
+
 		.dropzone {
 			border: dotted 1px black;
 			background-color: #EDECEC;
@@ -100,9 +123,11 @@
 				</section>
 			
 		<!-- Three -->
-			<section id="three" class="wrapper style1">
-				
-			</section>
+			<center><section id="three" class="wrapper style1">
+				 <div class="bubbleChart">
+
+				</div>
+			</section></center>
 			
 		<!-- Footer -->
 			<!-- <footer id="footer">
@@ -126,3 +151,66 @@
 
 	</body>
 </html>
+<script>
+// type anything here
+const text = 'X-Ray';
+
+// this function turns a string into an array
+const createLetterArray = (string) => {
+  return string.split('');
+}
+
+// this function creates letter layers wrapped in span tags
+const createLetterLayers = (array) => {
+  return array.map((letter) => {
+      let layer = '';
+      //specify # of layers per letter
+      for (let i = 1; i <= 2; i++) {
+        // if letter is a space
+        if(letter == ' '){
+          layer += '<span class="space"></span>';
+        }else{
+          layer += '<span class="letter-'+i+'">'+letter+'</span>';
+        }
+      }
+      return layer;
+  });
+}
+
+// this function wraps each letter in a parent container
+const createLetterContainers = (array) => {
+  return array.map((item) => {
+    let container = '';
+    container += '<div class="wrapper">'+item+'</div>';
+    return container;
+  });
+}
+
+// use a promise to output text layers into DOM first
+const outputLayers = new Promise(function(resolve, reject) {
+      document.getElementById('text').innerHTML = createLetterContainers(createLetterLayers(createLetterArray(text))).join('');
+      resolve();
+});
+
+// then adjust width and height of each letter
+const spans = Array.prototype.slice.call(document.getElementsByTagName('span'));
+outputLayers.then(() => {
+    return spans.map((span) => {
+      setTimeout(() => {
+        span.parentElement.style.width = span.offsetWidth+'px';
+        span.parentElement.style.height = span.offsetHeight+'px';
+      }, 250);
+    });  
+}).then(() => {
+    // then slide letters into view one at a time
+    let time = 250;
+    return spans.map((span) => {
+      time += 75;
+      setTimeout(() => {
+        span.parentElement.style.top = '0px';
+      }, time);
+    });
+});
+
+
+</script>
