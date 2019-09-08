@@ -7,9 +7,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<link
-		href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese'
-		rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet'
+	 type='text/css'>
 
 
 	<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -75,7 +74,6 @@
 			/*		  top: 50%;
 */
 			/* transform: translateY(-50%); */
-
 		}
 
 		#text:hover {
@@ -144,6 +142,17 @@
 			/*			padding: 80px;
 */
 		}
+
+		.overlay {
+			position: fixed;
+			/* Sit on top of the page content */
+			right: 30px;
+			bottom: 10px;
+			z-index: 25;
+			/* Specify a stack order in case you're using a different order for other elements */
+			cursor: pointer;
+			/* Add a pointer on hover */
+		}
 	</style>
 </head>
 
@@ -152,7 +161,7 @@
 	<div style="padding-right: 35px; padding-top: 15px;">
 
 		<div style="padding-left: 35px; padding-top: 15px;">
-	
+
 			<div style="float: right">
 				<h3> Hi, Demo User!</h3>
 			</div>
@@ -167,19 +176,7 @@
 			</div>
 		</div>
 
-
-
-
-
-
-
-
 	</div>
-
-
-
-
-
 
 	<section id="banner2">
 
@@ -204,6 +201,25 @@
 			</div>
 		</section>
 	</center>
+
+	<div class="overlay" id="chat" style="display: none;">
+		<div style="float: right;">
+			<img onclick="document.getElementById('chat').style.display = 'none';document.getElementById('icon').style.display = 'block';"
+			 src="./images/cross.png" style="width: 20px">
+		</div>
+
+		<div>
+			<iframe onclick="document.getElementById('chat').style.display = 'none';document.getElementById('icon').style.display = 'block';"
+			 allow="microphone;" width="350" height="430" src="https://console.dialogflow.com/api-client/demo/embedded/eedabc31-4a6a-47a5-adb2-612f2556d27e">
+			</iframe>
+		</div>
+
+	</div>
+
+	<div class="overlay" id="icon">
+		<img onclick="document.getElementById('chat').style.display = 'block';document.getElementById('icon').style.display = 'none';"
+		 src="./images/msg.png" style="width: 75px">
+	</div>
 
 	<!-- Footer -->
 	<!-- <footer id="footer">
@@ -262,32 +278,5 @@
 			return container;
 		});
 	}
-
-	// use a promise to output text layers into DOM first
-	const outputLayers = new Promise(function (resolve, reject) {
-		document.getElementById('text').innerHTML = createLetterContainers(createLetterLayers(createLetterArray(text))).join('');
-		resolve();
-	});
-
-	// then adjust width and height of each letter
-	const spans = Array.prototype.slice.call(document.getElementsByTagName('span'));
-	outputLayers.then(() => {
-		return spans.map((span) => {
-			setTimeout(() => {
-				span.parentElement.style.width = span.offsetWidth + 'px';
-				span.parentElement.style.height = span.offsetHeight + 'px';
-			}, 250);
-		});
-	}).then(() => {
-		// then slide letters into view one at a time
-		let time = 250;
-		return spans.map((span) => {
-			time += 75;
-			setTimeout(() => {
-				span.parentElement.style.top = '0px';
-			}, time);
-		});
-	});
-
 
 </script>
