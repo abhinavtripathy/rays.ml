@@ -1,22 +1,11 @@
 // const functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 
 const automl = require('@google-cloud/automl');
 const fs = require('fs');
 
   // Create client for prediction service.
   const client = new automl.PredictionServiceClient();
-
-  /**
-   * TODO(developer): Uncomment the following line before running the sample.
-   */
 
   const projectId = "pennapps-xx-252213";
   const computeRegion = "us-central1";
@@ -50,11 +39,12 @@ const fs = require('fs');
         payload: payload,
         params: params,
       });
-
+      let resultJSON = {}
     console.log(`Prediction results:`);
     response.payload.forEach(result => {
-    console.log(`Predicted class name: ${result.displayName}`);
-    console.log(`Predicted class score: ${result.classification.score}`);
+
+    resultJSON[result.displayName] = result.classification.score;
+    console.log(resultJSON);
   });
   }
   
