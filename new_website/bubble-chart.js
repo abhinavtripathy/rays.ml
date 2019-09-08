@@ -30,7 +30,7 @@ $(document).ready(function () {
       {
         name: "central-click",
         options: {
-          text: "(See more detail)",
+          // text: "(See more detail)",
           style: {
             "font-size": "12px",
             "font-style": "italic",
@@ -40,9 +40,6 @@ $(document).ready(function () {
             "fill": "white"
           },
           attr: {dy: "65px"},
-          centralClick: function(item) {
-            alert("Here is more details: " + item.text + "!!");
-          }
         }
       },
       {

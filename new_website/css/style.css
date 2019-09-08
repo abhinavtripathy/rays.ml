@@ -993,7 +993,7 @@
 /* Wrapper */
 
 	.wrapper {
-		padding: 5em 0 3em 0;
+		padding: 1em 0 3em 0;
 	}
 
 		.wrapper.style1 {
@@ -1231,12 +1231,23 @@
 	#banner {
 		background-attachment: scroll,						fixed;
 		background-color: #494d53;
-		background-image: url("images/overlay.png"), url("../images/banner.jpg");
+		background-image: url("images/overlay.png"), url("../images/heart.gif");
 		background-position: top left,					center center;
 		background-repeat: repeat,						no-repeat;
 		background-size: auto,						cover;
 		color: #d1d2d4;
 		padding: 16em 0;
+		position: relative;
+		text-align: center;
+	}
+
+	#banner2 {
+		background-attachment: scroll,						fixed;
+		background-position: top left,					center center;
+		background-repeat: repeat,						no-repeat;
+		background-size: auto,						cover;
+		color: #d1d2d4;
+		padding: 10em 0;
 		position: relative;
 		text-align: center;
 	}
