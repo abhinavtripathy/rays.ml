@@ -1,0 +1,22 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+var content = '';
+axios({
+  method: 'post',
+  url: 'https://automl.googleapis.com/v1beta1/projects/pennapps-xx-252213/locations/us-central1/models/ICN1555294739305209891:predict',
+  payload: {
+
+    image: {
+
+        "imageBytes": content
+    }
+
+  } 
+}).then((response) => {
+  console.log(response);
+}, (error) => {
+  console.log(error);
+});
+
+</script>

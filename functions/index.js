@@ -1,16 +1,28 @@
-// const functions = require('firebase-functions');
-
-
+const functions = require('firebase-functions');
 const automl = require('@google-cloud/automl');
 const fs = require('fs');
+const admin = require('firebase-admin');
 
-  // Create client for prediction service.
+admin.initializeApp(functions.config().firebase);
+
+let db = admin.firestore();
+
+
+exports.detectAutoML = functions.firestore
+  .document('data/img').onWrite((change, context) => {
+    
+    let cityRef = db.collection('data').doc('img');
+    let getDoc = cityRef.get()
+
+    let base64data = getDoc.data().encoded;
+
+      // Create client for prediction service.
   const client = new automl.PredictionServiceClient();
 
   const projectId = "pennapps-xx-252213";
   const computeRegion = "us-central1";
-  const modelId = "ICN7679781988763224795";
-  const filePath = "./xray.png";
+  const modelId = "ICN1555294739305209891";
+  // const filePath = "./xray.png";
 
     const scoreThreshold = "0.1";
 
@@ -18,7 +30,7 @@ const fs = require('fs');
   const modelFullId = client.modelPath(projectId, computeRegion, modelId);
 
   // Read the file content for prediction.
-  const content = fs.readFileSync(filePath, 'base64');
+  // const content = fs.readFileSync(filePath, 'base64');
 
   const params = {};
 
@@ -43,11 +55,19 @@ const fs = require('fs');
     console.log(`Prediction results:`);
     response.payload.forEach(result => {
 
-    resultJSON[result.displayName] = result.classification.score;
-    console.log(resultJSON);
+    resultJSON[result.displayName] = result.classification.score * 100;
+
   });
+  console.log(resultJSON);
+  
+  let docRef = db.collection('data').doc('tags');
+
+  let setAda = docRef.set(resultJSON);
+
   }
   
   test();
-  
 
+  });
+
+  
